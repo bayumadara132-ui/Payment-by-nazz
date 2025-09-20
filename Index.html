@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - Allpay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #ffd166;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background: var(--primary);
+            padding: 25px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 10px 0;
+            font-weight: 700;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .payment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header i {
+            font-size: 28px;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+
+        .card-header h3 {
+            font-size: 20px;
+            color: var(--dark);
+        }
+
+        .payment-details {
+            margin: 20px 0;
+        }
+
+        .payment-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .payment-info:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--dark);
+            word-break: break-all;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary);
+        }
+
+        .copy-btn i {
+            margin-right: 5px;
+        }
+
+        .note {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .note p {
+            margin: 5px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://img1.pixhost.to/images/8831/642451289_zion.jpg" alt="Logo Payment" class="logo">
+            </div>
+            <h1>Allpay Payment Gateway</h1>
+            <p class="welcome-text">Selamat datang di layanan pembayaran kami</p>
+        </header>
+        
+        <div class="content">
+            <div class="payment-options">
+                <div class="payment-card">
+                    <div class="card-header">
+                        <i class="fas fa-wallet"></i>
+                        <h3>E-Wallet Dana</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-info">
+                            <span class="info-label">Nomor Dana:</span>
+                            <span class="info-value">085876897090</span>
+                        </div>
+                        <div class="payment-info">
+                            <span class="info-label">Jenis:</span>
+                            <span class="info-value">E-Wallet</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('085876897090', 'Nomor Dana')">
+                            <i class="fas fa-copy"></i> Salin Nomor
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="card-header">
+                        <i class="fas fa-qrcode"></i>
+                        <h3>QRIS Allpay</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-info">
+                            <span class="info-label">Tipe:</span>
+                            <span class="info-value">QRIS Allpay</span>
+                        </div>
+                        <div class="payment-info">
+                            <span class="info-label">Admin:</span>
+                            <span class="info-value">0882008071105</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('0882008071105', 'Nomor Admin')">
+                            <i class="fas fa-copy"></i> Salin Nomor Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note">
+                <p><strong>Catatan Penting:</strong></p>
+                <p><i class="fas fa-check-circle" style="color: var(--success);"></i> Pastikan nomor tujuan pembayaran sudah benar</p>
+                <p><i class="fas fa-check-circle" style="color: var(--success);"></i> Untuk QRIS, hubungi admin di nomor yang tertera</p>
+                <p><i class="fas fa-check-circle" style="color: var(--success);"></i> Simpan bukti transfer setelah pembayaran</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 Allpay Payment Gateway - Layanan Pembayaran Terpercaya</p>
+        </footer>
+    </div>
+
+    <script>
+        // Fungsi untuk copy teks ke clipboard
+        function copyToClipboard(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`${type} berhasil disalin: ${text}`);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+                alert('Gagal menyalin teks. Silakan coba lagi.');
+            });
+        }
+
+        // Animasi smooth scroll untuk semua anchor link
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
